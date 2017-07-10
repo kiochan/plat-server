@@ -1,3 +1,8 @@
+/**
+ * Inspired by soraping/koa-ts
+ * https://github.com/soraping/koa-ts
+ */
+
 import * as Mongoose from 'mongoose'
 import { IUser, UserModel } from '../models/user';
 
