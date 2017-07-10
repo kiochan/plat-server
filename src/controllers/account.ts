@@ -23,7 +23,7 @@ export default class Account {
         }
 
         const salt = Encrypt.generateSalt(Config.encrypt.salt_length);
-        const entity = new ctx.service.db.user({
+        const entity = new db.user({
             email: msg.email,
             username: msg.username,
             nickname: msg.username,
@@ -31,6 +31,15 @@ export default class Account {
             salt: salt,
             avatar: Config.user.default_avatar
         });
+
+        const condition: any = (!msg.email) ? { username: entity.username } : { email: entity.email };
+        condition.password = entity.password;
+
+        const find_result = await db.user.find(condition);
+        if (find_result) {
+            ctx.body = Msg.create((!msg.email) ? MsgCode.USERNAME_OCCUPIED : MsgCode.EMAIL_OCCUPIED);
+            return next;
+        }
 
         const save_result = await entity.save();
         if (!save_result) {
