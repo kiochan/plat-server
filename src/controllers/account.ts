@@ -3,6 +3,7 @@ import MsgCode from '../constants/msg-code'
 import Msg from '../constants/msg'
 import Config from '../config'
 import Encrypt from '../utils/encrypt'
+import Validate from '../utils/validate'
 
 export default class Account {
 
@@ -16,7 +17,7 @@ export default class Account {
         const { db, msg } = ctx.service;
 
         const check = Account.checkLoginBase(msg);
-        if (check !== '') {
+        if (check !== MsgCode.OK) {
             ctx.body = Msg.create(check);
             return next;
         }
@@ -61,12 +62,19 @@ export default class Account {
             return MsgCode.PASSWORD_REQUIRED;
         }
 
-        // TODO 有效性验证
-        // 邮箱格式、字符
-        // 用户名长度、字符
-        // 密码长度、字符
+        if (!Validate.email(msg.email)) {
+            return MsgCode.EMAIL_INVALID;
+        }
 
-        return '';
+        if (!Validate.username(msg.username)) {
+            return MsgCode.USERNAME_INVALID;
+        }
+
+        if (!Validate.password(msg.password)) {
+            return MsgCode.PASSWORD_INVALID;
+        }
+
+        return MsgCode.OK;
     }
 
 }

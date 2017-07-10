@@ -10,6 +10,12 @@ export default {
         salt_length: 6
     },
 
+    validate: {
+        email: [4, 256],
+        username: [4, 32],
+        password: [6, 32]
+    },
+
     mongoose: {
         host: 'mongodb://localhost/test-login',
     }
