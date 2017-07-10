@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"locale": "zh-CN",
+    	"sourceMap": true,
+        "alwaysStrict": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+		"lib": [
+			"es5",
+			"es6",
+			"dom",
+			"es2015.promise"
+		],
+        "outDir": "./build"
+	},
+	"exclude": [
+		"./node_modules",
+		"./build",
+		"./res"
+	]
+}
