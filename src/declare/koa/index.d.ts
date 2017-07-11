@@ -11,4 +11,8 @@ declare module "koa" {
             msg?: Msg
         };
     }
+
+    interface Request extends BaseRequest {
+        body: any; // koa-parser
+    }
 }
