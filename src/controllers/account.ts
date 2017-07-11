@@ -36,7 +36,7 @@ export default class Account {
         condition.password = entity.password;
 
         const find_result = await db.user.find(condition);
-        if (find_result) {
+        if (find_result && find_result.length > 0) {
             ctx.body = Msg.create((!msg.email) ? MsgCode.USERNAME_OCCUPIED : MsgCode.EMAIL_OCCUPIED);
             return next;
         }
