@@ -45,10 +45,11 @@ export default class Validate {
             return false;
         }
 
-        // TODO check regex
-        if (!/[/x20-/x7E]*/.test(val)) {
+        if (!/[\x21-\x7E]*/.test(val)) {
             return false;
         }
+
+        return true;
     }
 
     private static validateLength(val: string, limit: Array<number>): boolean {
