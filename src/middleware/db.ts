@@ -17,7 +17,9 @@ export interface Database {
 export default function init(config: DbConfig): Database {
 
     (<any>Mongoose).Promise = global.Promise;
-    Mongoose.connect(config.host);
+    Mongoose.connect(config.host, {
+        useMongoClient: true
+    });
 
     const mongoDb = Mongoose.connection;
 
