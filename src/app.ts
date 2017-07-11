@@ -2,6 +2,7 @@ import * as Koa from 'koa'
 import * as cors from 'kcors';
 import * as compress from 'koa-compress'
 import * as json from 'koa-json';
+import * as bodyParser from 'koa-bodyparser'
 import Database from './middleware/db'
 import Config from './config'
 import Trace from './utils/trace'
@@ -21,6 +22,7 @@ app.use(async (ctx, next) => {
 // init ctx.service
 const db = Database(Config.mongoose);
 app.use(async (ctx, next) => {
+    console.log(ctx.request.query);
     ctx.service = {
         db: db,
     };
@@ -28,6 +30,7 @@ app.use(async (ctx, next) => {
 });
 
 // msg-parser
+app.use(bodyParser());
 app.use(msgParser());
 
 // koa-json
