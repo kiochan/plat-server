@@ -4,6 +4,7 @@ import Msg from '../constants/msg'
 import Config from '../config'
 import Encrypt from '../utils/encrypt'
 import Validate from '../utils/validate'
+import Trace from '../utils/trace'
 
 export default class Account {
 
@@ -47,7 +48,7 @@ export default class Account {
             return next;
         }
 
-        console.log(`User [${entity.username} (${entity.email})] created, id: ${entity.id}.`);
+        Trace.info(`User created [${entity.username}(${entity.email})], id: ${entity.id}.`);
 
         const result = Msg.create();
         ctx.body = entity;
