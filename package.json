@@ -4,21 +4,27 @@
   "description": "",
   "main": "./build/app.js",
   "scripts": {
-    "build": "tsc && node ./build/app.js"
+    "build": "tsc -p .",
+    "watch": "tsc -w -p .",
+    "deamon": "nodemon ./build/app.js",
+    "dev": "concurrently \"npm run watch\" \"npm run deamon\"",
+    "start": "node ./build/app.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^7.6.0",
-    "@types/koa-bodyparser": "^3.0.23",
     "@types/kcors": "^2.2.1",
-    "@types/koa-compress": "^2.0.6",
     "@types/koa": "^2.0.39",
+    "@types/koa-bodyparser": "^3.0.23",
+    "@types/koa-compress": "^2.0.6",
     "@types/koa-json": "^2.0.16",
     "@types/koa-router": "^7.0.22",
     "@types/mongoose": "^4.7.18",
+    "@types/node": "^7.6.0",
+    "concurrently": "^3.5.0",
     "gulp": "^3.9.1",
     "gulp-typescript": "^3.2.0",
+    "nodemon": "^1.11.0",
     "pm2": "^2.5.0"
   },
   "dependencies": {
