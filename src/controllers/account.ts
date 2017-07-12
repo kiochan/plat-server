@@ -33,13 +33,22 @@ export default class Account {
             avatar: Config.user.default_avatar
         });
 
-        const condition: any = (!msg.email) ? { username: entity.username } : { email: entity.email };
-        condition.password = entity.password;
+        if (msg.email) {
+            const cdt_email = { email: entity.email };
+            const res_email = await db.user.find(cdt_email);
+            if (res_email && res_email.length > 0) {
+                ctx.body = Msg.create(MsgCode.EMAIL_OCCUPIED);
+                return next;
+            }
+        }
 
-        const find_result = await db.user.find(condition);
-        if (find_result && find_result.length > 0) {
-            ctx.body = Msg.create((!msg.email) ? MsgCode.USERNAME_OCCUPIED : MsgCode.EMAIL_OCCUPIED);
-            return next;
+        if (msg.username) {
+            const cdt_username = { username: entity.username };
+            const res_username = await db.user.find(cdt_username);
+            if (res_username && res_username.length > 0) {
+                ctx.body = Msg.create(MsgCode.USERNAME_OCCUPIED);
+                return next;
+            }
         }
 
         const save_result = await entity.save();
