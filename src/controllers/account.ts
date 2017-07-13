@@ -81,12 +81,14 @@ export default class Account {
             return MsgCode.PASSWORD_REQUIRED;
         }
 
-        if (!Validate.email(msg.email)) {
-            return MsgCode.EMAIL_INVALID;
-        }
-
-        if (!Validate.username(msg.username)) {
-            return MsgCode.USERNAME_INVALID;
+        if (!msg.email) {
+            if (!Validate.username(msg.username)) {
+                return MsgCode.USERNAME_INVALID;
+            }
+        } else {
+            if (!Validate.email(msg.email)) {
+                return MsgCode.EMAIL_INVALID;
+            }
         }
 
         if (!Validate.password(msg.password)) {
