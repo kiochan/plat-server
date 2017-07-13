@@ -89,3 +89,6 @@ build
 
 # package-lock file
 package-lock.json
+
+# redis dump file
+dump.rdb
