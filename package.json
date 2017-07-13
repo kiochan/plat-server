@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/ioredis": "0.0.23",
     "@types/kcors": "^2.2.1",
     "@types/koa": "^2.0.39",
     "@types/koa-bodyparser": "^3.0.23",
@@ -28,6 +29,7 @@
     "pm2": "^2.5.0"
   },
   "dependencies": {
+    "ioredis": "^3.1.1",
     "kcors": "^2.2.1",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
