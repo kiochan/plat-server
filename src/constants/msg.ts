@@ -2,7 +2,7 @@ import MsgCode from './msg-code'
 
 export default class Msg {
     public status: string;
-    public mkey: string;
+    public token: string;
 
     public email: string;
     public username: string;
