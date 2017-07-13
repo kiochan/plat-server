@@ -9,9 +9,37 @@ import Trace from '../utils/trace'
 export default class Account {
 
     public static async onLogin(ctx: Koa.Context, next) {
-        console.log(ctx.service.msg);
-        const { db, msg } = ctx.service;
-        ctx.body = { cv: 'asa', key: ctx.service.msg };
+        const { db, redis, msg } = ctx.service;
+
+        const check = Account.checkLoginBase(msg);
+        if (check !== MsgCode.OK) {
+            ctx.body = Msg.create(check);
+            return next;
+        }
+
+        const condition = msg.email ? { email: msg.email } : { username: msg.username };
+        const dat_users = await db.user.find(condition);
+
+        if (!dat_users || dat_users.length <= 0) {
+            ctx.body = Msg.create(msg.email ? MsgCode.EMAIL_NOT_FOUND : MsgCode.USERNAME_NOT_FOUND);
+            return next;
+        }
+
+        const dat_user = dat_users[0];
+        const en_pass = Encrypt.encryptPassword(msg.password, dat_user.salt);
+        if (en_pass != dat_user.password) {
+            ctx.body = Msg.create(MsgCode.PASSWORD_INCORRECT);
+            return next;
+        }
+
+        const token = Encrypt.generateToken(dat_user.id);
+        await redis.set(Config.cache_key.user_token + token, { id: dat_user.id });
+
+        Trace.info(`User login [${dat_user.username}(${dat_user.email})], id: ${dat_user.id}, token: ${token}.`);
+
+        const send = Msg.create();
+        send.token = token;
+        ctx.body = send;
     }
 
     public static async onCreate(ctx: Koa.Context, next) {
@@ -59,8 +87,8 @@ export default class Account {
 
         Trace.info(`User created [${entity.username}(${entity.email})], id: ${entity.id}.`);
 
-        const result = Msg.create();
-        ctx.body = entity;
+        const send = Msg.create();
+        ctx.body = send;
     }
 
     private static checkLoginBase(msg: Msg): string {

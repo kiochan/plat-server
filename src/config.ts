@@ -24,5 +24,9 @@ export default {
         host: 'localhost',
         port: 6379,
         db: 1
+    },
+
+    cache_key: {
+        user_token: 'user_token_'
     }
 }
