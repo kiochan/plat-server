@@ -22,7 +22,7 @@ export default class Encrypt {
 
     public static generateToken(uid: string): string {
         const ns = uuidv4();
-        return uuidv5(uid, ns);
+        return uuidv5(uid, ns).replace(/-/g, '');
     }
 
 }
