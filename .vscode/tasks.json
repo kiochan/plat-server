@@ -1,0 +1,9 @@
+{
+    "version": "0.1.0",
+    "command": "Watch Typescript",
+    "isShellCommand": true,
+    "args": ["-w", "-p", "."],
+    "showOutput": "silent",
+    "isBackground": true,
+    "problemMatcher": "$tsc-watch"
+}

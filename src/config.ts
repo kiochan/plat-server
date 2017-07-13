@@ -18,5 +18,11 @@ export default {
 
     mongoose: {
         host: 'mongodb://localhost/test-login',
+    },
+
+    redis: {
+        host: 'localhost',
+        port: 6379,
+        db: 1
     }
 }

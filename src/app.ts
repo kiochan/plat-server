@@ -2,7 +2,9 @@ import * as Koa from 'koa'
 import * as cors from 'kcors';
 import * as compress from 'koa-compress'
 import * as json from 'koa-json';
+import * as bodyParser from 'koa-bodyparser'
 import Database from './middleware/db'
+import Redis from './middleware/redis'
 import Config from './config'
 import Trace from './utils/trace'
 import router from './router';
@@ -22,12 +24,16 @@ app.use(async (ctx, next) => {
 const db = Database(Config.mongoose);
 app.use(async (ctx, next) => {
     ctx.service = {
-        db: db,
+        db: db
     };
     await next();
 });
 
+// ioredis
+app.use(Redis(Config.redis));
+
 // msg-parser
+app.use(bodyParser());
 app.use(msgParser());
 
 // koa-json
