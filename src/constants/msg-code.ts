@@ -14,6 +14,10 @@ export default class MsgCode {
     public static readonly EMAIL_OCCUPIED: string = 'EMAIL_OCCUPIED';
     public static readonly USERNAME_OCCUPIED: string = 'USERNAME_OCCUPIED';
 
+    public static readonly EMAIL_NOT_FOUND: string = 'EMAIL_NOT_FOUND';
+    public static readonly USERNAME_NOT_FOUND: string = 'USERNAME_NOT_FOUND';
+    public static readonly PASSWORD_INCORRECT: string = 'PASSWORD_INCORRECT';
+
     public static readonly DB_FAILED: string = 'DB_FAILED';
 
 }
